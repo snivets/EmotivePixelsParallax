@@ -1,8 +1,9 @@
 {
   "name": "emotivepixelsparallax",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
+  "homepage": "https://snivets.github.io/EmotivePixelsParallax",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
