@@ -4,4 +4,5 @@ interface Episode {
   imageUrl?: string | null;
   seasonNumber?: number;
   episodeNumber?: number;
+  seasonString?: string;
 }

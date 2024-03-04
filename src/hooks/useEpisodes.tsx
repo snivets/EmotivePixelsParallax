@@ -14,6 +14,17 @@ function useEpisodes(feedRss: string): Episode[] {
     if (image) {
       imageUrl = image.getAttribute('href');
     }
+    const season = e.getElementsByTagName('itunes:season')[0];
+    const episode = e.getElementsByTagName('itunes:episode')[0];
+    let seasonNumber;
+    if (season && season.textContent) {
+      seasonNumber = parseInt(season.textContent);
+    }
+    let episodeNumber;
+    if (episode && episode.textContent) {
+      episodeNumber = parseInt(episode.textContent);
+    }
+    let seasonString = `s${seasonNumber}e${episodeNumber}`;
     
     if (!title || !desc) return;
 
@@ -25,6 +36,9 @@ function useEpisodes(feedRss: string): Episode[] {
       title,
       description: desc,
       imageUrl,
+      seasonNumber,
+      episodeNumber,
+      seasonString
     });
   });
 

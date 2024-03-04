@@ -4,6 +4,7 @@ import EpisodePage from './episode-page'
 import { Parallax } from 'react-scroll-parallax'
 import { useEffect, useState } from 'react';
 import useEpisodes from './hooks/useEpisodes';
+import useImageFilter from './hooks/useImageFilter';
 
 function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
@@ -24,7 +25,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setEpisodes(useEpisodes(feedRss));
+    const allEpisodes = useEpisodes(feedRss);
+    setEpisodes(useImageFilter(allEpisodes));
   }, [feedRss]);
 
   return (
@@ -32,7 +34,7 @@ function App() {
       <Parallax speed={-75}>
         <TitleCard />
       </Parallax>
-      {episodes?.map((e, i) => <Parallax><EpisodePage text={e.description} imageUrl={e.imageUrl} key={i} /></Parallax>)}
+      {episodes?.map((e, i) => <Parallax><EpisodePage text={e.description} imageFilename={e.seasonString} key={i} /></Parallax>)}
     </>
   )
 }
