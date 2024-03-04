@@ -34,7 +34,7 @@ function App() {
       <Parallax speed={-75}>
         <TitleCard />
       </Parallax>
-      {episodes?.map((e, i) => <Parallax><EpisodePage text={e.description} imageFilename={e.seasonString} key={i} /></Parallax>)}
+      {episodes?.map((e, i) => <Parallax><EpisodePage text={e.description} title={e.title} imageFilename={e.seasonString} key={i} /></Parallax>)}
     </>
   )
 }
