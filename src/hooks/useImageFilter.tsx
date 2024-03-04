@@ -1,7 +1,7 @@
 const getImages = () => {
   const images = import.meta.glob('/src/images/*');
   return Object.keys(images).map((path) => {
-    const fileName = path.match(/\/src\/images\/(.+)\.\w+$/)?.[1]; //Filename only
+    const fileName = path.match(/\/images\/(.+)\.\w+$/)?.[1]; //Filename only
     return fileName || '';
   });
 };
