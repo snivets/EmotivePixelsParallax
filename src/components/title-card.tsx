@@ -16,7 +16,7 @@ const TitleCard = () => {
       exit={{ opacity: 0 }}
     >
       <div className="flex justify-center pt-12">
-        <img src="images/eplogo.png" alt="Emotive Pixels" className="max-w-[80%]" />
+        <img src="images/eplogo.png" alt="Emotive Pixels" className="max-w-[80%] max-h-[450px]" />
       </div>
       <div className="mt-12 mx-[10vw] leading-none">
         <p className="text-3xl leading-none">
