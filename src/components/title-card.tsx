@@ -10,9 +10,9 @@ const TitleCard = () => {
       exit={{ opacity: 0 }}
     >
       <div className="flex justify-center pt-12">
-        <img src="images/eplogo.png" alt="Emotive Pixels" />
+        <img src="images/eplogo.png" alt="Emotive Pixels" className="max-w-[80%]" />
       </div>
-      <div className="mt-12 mx-[20%] text-4xl">We are a podcast about videogames. Usually, we gather and talk freely about a single game, but sometimes,  we also hang out and casually discuss what we've been playing.</div>
+      <div className="mt-12 mx-[10vw] text-4xl">We are a podcast about videogames. Usually, we gather and talk freely about a single game, but sometimes,  we also hang out and casually discuss what we've been playing.</div>
     </motion.div>
   )
 }
