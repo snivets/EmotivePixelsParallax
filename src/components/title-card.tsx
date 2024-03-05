@@ -12,10 +12,16 @@ const TitleCard = () => {
       <div className="flex justify-center pt-12">
         <img src="images/eplogo.png" alt="Emotive Pixels" className="max-w-[80%]" />
       </div>
-      <div className="mt-12 mx-[10vw] text-4xl">We are a podcast about videogames. Usually, we gather and talk freely about a single game, but sometimes,  we also hang out and casually discuss what we've been playing.</div>
+      <div className="mt-12 mx-[10vw] text-3xl">
+        <p>
+          Emotive Pixels is a videogame podcast. We typically discuss (and spoil!) a single game in a way you don't have to play along to enjoy, but sometimes we have multi-game episodes we call Pixel Arrays where we talk about anything we've been enjoying.
+        </p>
+        <p className="text-xl">
+          We've been at this for ten years, so there are all kinds of episodes in our backlog, often with new guests.
+        </p>
+      </div>
     </motion.div>
   )
 }
 
 export default TitleCard;
-
