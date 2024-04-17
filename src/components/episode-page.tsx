@@ -1,7 +1,10 @@
 import { motion } from "framer-motion"
 import DOMPurify from 'dompurify';
+import useOptionsStore from "../store/optionsStore";
 
 const EpisodePage = (props: any) => {
+  const showDates = useOptionsStore((state) => state.showDates);
+
   return (
     <motion.div
       className="full-page relative flex items-center"
@@ -15,6 +18,9 @@ const EpisodePage = (props: any) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      {showDates && <div className="absolute bottom-7 left-5 opacity-30 uppercase max-w-[80%] truncate text-xs">
+        {props.date}
+      </div>}
       <div className="absolute bottom-2 left-5 opacity-65 uppercase max-w-[80%] truncate">
         {props.title}
       </div>

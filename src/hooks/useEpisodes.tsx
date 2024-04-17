@@ -8,14 +8,22 @@ function useEpisodes(feedRss: string): Episode[] {
   episodesXml.forEach(e => {
     const title = e.querySelector('title')?.textContent;
     let desc = e.querySelector('description')?.textContent;
+    const dateStr = e.querySelector('pubDate')?.textContent;
+    let date;
+    if (dateStr) {
+      date = new Date(dateStr)
+        .toLocaleDateString('en-us', { year:"numeric", month:"long" });
+    }
 
     let imageUrl = null;
     const image = e.getElementsByTagName('itunes:image')[0];
     if (image) {
       imageUrl = image.getAttribute('href');
     }
+    // The colon seems to throw querySelector.
     const season = e.getElementsByTagName('itunes:season')[0];
     const episode = e.getElementsByTagName('itunes:episode')[0];
+    const isBonus = e.getElementsByTagName('itunes:episodeType')[0]?.textContent == 'bonus';
     let seasonNumber;
     if (season && season.textContent) {
       seasonNumber = parseInt(season.textContent);
@@ -24,7 +32,7 @@ function useEpisodes(feedRss: string): Episode[] {
     if (episode && episode.textContent) {
       episodeNumber = parseInt(episode.textContent);
     }
-    let seasonString = `s${seasonNumber}e${episodeNumber}`;
+    let seasonString = isBonus ? null : `s${seasonNumber}e${episodeNumber}`;
     
     if (!title || !desc) return;
 
@@ -38,7 +46,9 @@ function useEpisodes(feedRss: string): Episode[] {
       imageUrl,
       seasonNumber,
       episodeNumber,
-      seasonString
+      seasonString,
+      episodeDate: date,
+      isBonus
     });
   });
 

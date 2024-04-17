@@ -4,11 +4,16 @@ import EpisodePage from './components/episode-page'
 import { Parallax } from 'react-scroll-parallax'
 import { useEffect, useState } from 'react';
 import useEpisodes from './hooks/useEpisodes';
+import useShuffle from './hooks/useShuffle';
 import useImageFilter from './hooks/useImageFilter';
+import ConfigModal from './components/config-modal';
+import useOptionsStore from './store/optionsStore';
 
 function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
   const [episodes, setEpisodes] = useState<Episode[]>();
+  const [showMenu, setShowMenu] = useState(false);
+  const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
 
   const fetchRssFeed = async () => {
     try {
@@ -25,17 +30,29 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const allEpisodes = useEpisodes(feedRss);
-    setEpisodes(useImageFilter(allEpisodes));
-  }, [feedRss]);
-
+    let eps = useEpisodes(feedRss);
+    if (shuffleEpisodes)
+      eps = useShuffle(eps);
+    setEpisodes(useImageFilter(eps));
+  }, [feedRss, shuffleEpisodes]);
+  
   return (
-    <>
+    <div onClick={() => setShowMenu(!showMenu)}>
       <Parallax speed={-75}>
         <TitleCard />
       </Parallax>
-      {episodes?.map((e, i) => <Parallax><EpisodePage text={e.description} title={e.title} imageFilename={e.seasonString} key={i} /></Parallax>)}
-    </>
+      {showMenu && (
+        <ConfigModal />
+      )}
+      {episodes?.map((e) => 
+        <Parallax key={e.seasonString}>
+          <EpisodePage
+            text={e.description}
+            title={e.title}
+            date={e.seasonString + ' ⋅ ' + e.episodeDate}
+            imageFilename={e.seasonString}/>
+        </Parallax>)}
+    </div>
   )
 }
 
