@@ -7,11 +7,13 @@ import useEpisodes from './hooks/useEpisodes';
 import useShuffle from './hooks/useShuffle';
 import useImageFilter from './hooks/useImageFilter';
 import ConfigModal from './components/config-modal';
+import useOptionsStore from './store/optionsStore';
 
 function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
   const [episodes, setEpisodes] = useState<Episode[]>();
   const [showMenu, setShowMenu] = useState(false);
+  const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
 
   const fetchRssFeed = async () => {
     try {
@@ -28,42 +30,29 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const allEpisodes = useShuffle(useEpisodes(feedRss));
-    setEpisodes(useImageFilter(allEpisodes));
-  }, [feedRss]);
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress);
-    };
-  }, [showMenu]);
-
-  const handleKeyPress = (event: any) => {
-    if (event.key === 'm' || event.key === 'M') {
-      setShowMenu(!showMenu);
-    }
-  };
+    let eps = useEpisodes(feedRss);
+    if (shuffleEpisodes)
+      eps = useShuffle(eps);
+    setEpisodes(useImageFilter(eps));
+  }, [feedRss, shuffleEpisodes]);
   
-
   return (
-    <>
+    <div onClick={() => setShowMenu(!showMenu)}>
       <Parallax speed={-75}>
         <TitleCard />
       </Parallax>
       {showMenu && (
         <ConfigModal />
       )}
-      {episodes?.map((e, i) => 
-        <Parallax>
+      {episodes?.map((e) => 
+        <Parallax key={e.seasonString}>
           <EpisodePage
             text={e.description}
             title={e.title}
             date={e.seasonString + ' ⋅ ' + e.episodeDate}
-            imageFilename={e.seasonString}
-            key={i} />
+            imageFilename={e.seasonString}/>
         </Parallax>)}
-    </>
+    </div>
   )
 }
 
