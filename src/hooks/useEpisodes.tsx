@@ -37,7 +37,7 @@ function useEpisodes(feedRss: string): Episode[] {
     if (!title || !desc) return;
 
     if (desc.startsWith('<p>')) {
-      desc = desc.substring(3, desc.length - 5);
+      desc = desc.substring(3);
     }
 
     episodes.push({

@@ -25,7 +25,7 @@ const EpisodePage = (props: any) => {
         {props.title}
       </div>
       <div
-        className="text-4xl m-[10%] max-h-[90vh] w-full"
+        className="text-4xl m-[10%] max-h-[90vh] w-full drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)]"
         dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(props.text)}} />
     </motion.div>
   )

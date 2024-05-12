@@ -1,4 +1,4 @@
-import './App.css'
+import './styles/App.css'
 import TitleCard from './components/title-card'
 import EpisodePage from './components/episode-page'
 import { Parallax } from 'react-scroll-parallax'
