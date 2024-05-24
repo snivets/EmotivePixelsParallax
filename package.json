@@ -1,7 +1,7 @@
 {
   "name": "emotivepixelsparallax",
   "private": true,
-  "version": "0.2.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,10 +11,8 @@
   },
   "dependencies": {
     "dompurify": "^3.0.9",
-    "framer-motion": "^11.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scroll-parallax": "^3.4.5",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
