@@ -1,9 +1,7 @@
-import { motion } from "framer-motion"
-
 const TitleCard = () => {
   return (
-    <motion.div
-      className="full-page"
+    <div
+      className="snap-normal snap-start"
       style={{
         backgroundColor: 'gray',
         backgroundImage: 'url(images/epbg.png)',
@@ -11,9 +9,6 @@ const TitleCard = () => {
         backgroundPositionY: 'center',
         backgroundPositionX: 'center',
         height: '100vh'}}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
     >
       <div className="flex justify-center pt-12">
         <img src="images/eplogo.png" alt="Emotive Pixels" className="max-w-[80%] max-h-[450px]" />
@@ -26,7 +21,7 @@ const TitleCard = () => {
           We've been at this for ten years, so there are all kinds of episodes in our backlog, often with new guests.
         </p>
       </div>
-    </motion.div>
+    </div>
   )
 }
 

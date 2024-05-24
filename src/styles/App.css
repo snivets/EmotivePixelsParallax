@@ -9,7 +9,12 @@
   text-align: center;
   color: rgba(255, 255, 255, 1);
   background-color: #242424;
-  text-shadow: 1px 1px 2px black;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;  /* Firefox */
+}
+
+:-webkit-scrollbar {
+  display: none;
 }
 
 a {
@@ -29,14 +34,4 @@ ul {
 
 li {
   margin-top: 2pt;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-/* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }
