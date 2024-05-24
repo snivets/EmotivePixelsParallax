@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import DOMPurify from 'dompurify';
-import useOptionsStore from "../store/optionsStore";
+import useOptionsStore from "../stores/optionsStore";
 
 const EpisodePage = (props: any) => {
   const showDates = useOptionsStore((state) => state.showDates);

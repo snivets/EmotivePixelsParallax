@@ -7,7 +7,7 @@ import useEpisodes from './hooks/useEpisodes';
 import useShuffle from './hooks/useShuffle';
 import useImageFilter from './hooks/useImageFilter';
 import ConfigModal from './components/config-modal';
-import useOptionsStore from './store/optionsStore';
+import useOptionsStore from './stores/optionsStore';
 
 function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');

@@ -1,4 +1,4 @@
-import useOptionsStore from "../store/optionsStore";
+import useOptionsStore from "../stores/optionsStore";
 
 const ConfigModal = () => {
   const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
