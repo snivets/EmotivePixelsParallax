@@ -28,8 +28,14 @@ p, ul {
 ul {
   font-size: 0.4em;
   line-height: 95%;
-  width: 90%;
-  margin-left: 5%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+@media (orientation: portrait) {
+  ul {
+    margin-left: -5%;
+    margin-right: -5%;
+  }
 }
 
 li {
