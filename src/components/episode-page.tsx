@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify';
 import useOptionsStore from "../stores/optionsStore";
 
-const EpisodePage = (props: any) => {
+export function EpisodePage(props: any) {
   const showDates = useOptionsStore((state) => state.showDates);
 
   return (
@@ -12,7 +12,8 @@ const EpisodePage = (props: any) => {
         backgroundImage: 'url(images/' + props.imageFilename + '.jpg)',
         backgroundSize: 'cover',
         backgroundPositionY: 'center',
-        backgroundPositionX: 'center', }}
+        backgroundPositionX: 'center',
+      }}
     >
       {showDates && <div className="absolute bottom-7 left-5 opacity-30 uppercase max-w-[80%] truncate text-xs">
         {props.date}
@@ -22,9 +23,7 @@ const EpisodePage = (props: any) => {
       </div>
       <div
         className="text-4xl m-[10%] max-h-[90vh] w-full drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)]"
-        dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(props.text)}} />
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.text) }} />
     </div>
   )
 }
-
-export default EpisodePage;

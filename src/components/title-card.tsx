@@ -1,4 +1,4 @@
-const TitleCard = () => {
+export function TitleCard() {
   return (
     <div
       className="snap-normal snap-start"
@@ -8,7 +8,8 @@ const TitleCard = () => {
         backgroundSize: 'cover',
         backgroundPositionY: 'center',
         backgroundPositionX: 'center',
-        height: '100vh'}}
+        height: '100vh'
+      }}
     >
       <div className="flex justify-center pt-12">
         <img src="images/eplogo.png" alt="Emotive Pixels" className="max-w-[80%] max-h-[450px]" />
@@ -24,5 +25,3 @@ const TitleCard = () => {
     </div>
   )
 }
-
-export default TitleCard;

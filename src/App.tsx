@@ -1,12 +1,10 @@
-import './styles/App.css'
-import TitleCard from './components/title-card'
-import EpisodePage from './components/episode-page'
 import { Fragment, useEffect, useState } from 'react';
 import useEpisodes from './hooks/useEpisodes';
-import useShuffle from './hooks/useShuffle';
 import useImageFilter from './hooks/useImageFilter';
-import ConfigModal from './components/config-modal';
+import useShuffle from './hooks/useShuffle';
 import useOptionsStore from './stores/optionsStore';
+import { TitleCard, EpisodePage, ConfigModal, ScrollHinter } from './components/';
+import './styles/style-overrides.css';
 
 function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
@@ -40,6 +38,7 @@ function App() {
       <div onClick={() => setShowMenu(!showMenu)}>
         <TitleCard />
         {showMenu && <ConfigModal />}
+        <ScrollHinter />
       </div>
       {episodes?.map((e) =>
         <EpisodePage

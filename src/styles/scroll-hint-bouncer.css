@@ -1,0 +1,30 @@
+.bounce-container {
+	position: fixed;
+	bottom: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.bounce-icon {
+	animation: bounce 7s infinite;
+	font-size: 3rem;
+}
+
+@keyframes bounce {
+
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+		transform: translateY(0);
+	}
+
+	48% {
+		transform: translateY(-1rem);
+	}
+
+	53% {
+		transform: translateY(-0.5rem);
+	}
+}

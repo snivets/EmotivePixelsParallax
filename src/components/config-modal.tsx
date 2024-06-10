@@ -1,11 +1,11 @@
 import useOptionsStore from "../stores/optionsStore";
 
-const ConfigModal = () => {
+export function ConfigModal() {
   const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
   const showDates = useOptionsStore((state) => state.showDates);
 
   const toggleShuffleEpisodes = (checked: boolean) => {
-    useOptionsStore.setState({shuffleEpisodes: checked});
+    useOptionsStore.setState({ shuffleEpisodes: checked });
   }
   const toggleShowDates = (checked: boolean) => {
     useOptionsStore.setState({ showDates: checked });
@@ -13,7 +13,7 @@ const ConfigModal = () => {
 
   return (
     <div className="fixed bottom-20 right-20 bg-opacity-75 transform bg-white border-opacity-100 rounded-2xl p-5 text-left text-xs font-sans italic drop-shadow"
-        onClick={(e) => e.stopPropagation()} >
+      onClick={(e) => e.stopPropagation()} >
       <label className='flex items-top'>
         <input
           type="checkbox"
@@ -38,5 +38,3 @@ const ConfigModal = () => {
     </div>
   )
 }
-
-export default ConfigModal;
