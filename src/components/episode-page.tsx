@@ -21,7 +21,7 @@ export function EpisodePage(props: any) {
       <div className="absolute bottom-2 left-5 opacity-65 uppercase max-w-[80%] truncate">
         {props.title}
       </div>
-      <div className="absolute bottom-2 right-4 max-w-[20%] opacity-60">
+      <div className="absolute bottom-2 right-4 max-w-[20%] opacity-80">
         <audio src={props.audio} controls preload="none" />
       </div>
       <div
