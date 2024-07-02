@@ -34,7 +34,7 @@ export default function App() {
   }, [feedRss, shuffleEpisodes]);
 
   return (
-    <Fragment>
+    <>
       <div onClick={() => setShowMenu(!showMenu)}>
         <TitleCard />
         {showMenu && <ConfigModal />}
@@ -42,12 +42,14 @@ export default function App() {
       </div>
       {episodes?.map((e) =>
         <EpisodePage
+          key={e.title}
           text={e.description}
           title={e.title}
           date={e.seasonString + ' ⋅ ' + e.episodeDate}
           audio={e.audioUrl}
-          imageFilename={e.seasonString} />
+          imageFilename={e.seasonString}
+          length={e.length} />
       )}
-    </Fragment>
+    </>
   )
 }

@@ -8,4 +8,5 @@ interface Episode {
   seasonString?: string | null;
   episodeDate?: string;
   isBonus: boolean;
+  length: string | null;
 }

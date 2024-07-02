@@ -22,6 +22,7 @@ function useEpisodes(feedRss: string): Episode[] {
       imageUrl = image.getAttribute('href');
     }
     // The colon seems to throw querySelector.
+    const length = e.getElementsByTagName('itunes:duration')[0].textContent;
     const season = e.getElementsByTagName('itunes:season')[0];
     const episode = e.getElementsByTagName('itunes:episode')[0];
     const isBonus = e.getElementsByTagName('itunes:episodeType')[0]?.textContent == 'bonus';
@@ -50,7 +51,8 @@ function useEpisodes(feedRss: string): Episode[] {
       episodeNumber,
       seasonString,
       episodeDate: date,
-      isBonus
+      isBonus,
+      length
     });
   });
 
