@@ -6,7 +6,7 @@ import useOptionsStore from './stores/optionsStore';
 import { TitleCard, EpisodePage, ConfigModal, ScrollHinter } from './components/';
 import './styles/style-overrides.css';
 
-function App() {
+export default function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
   const [episodes, setEpisodes] = useState<Episode[]>();
   const [showMenu, setShowMenu] = useState(false);
@@ -38,17 +38,16 @@ function App() {
       <div onClick={() => setShowMenu(!showMenu)}>
         <TitleCard />
         {showMenu && <ConfigModal />}
-        <ScrollHinter />
+        {episodes && <ScrollHinter />}
       </div>
       {episodes?.map((e) =>
         <EpisodePage
           text={e.description}
           title={e.title}
           date={e.seasonString + ' ⋅ ' + e.episodeDate}
+          audio={e.audioUrl}
           imageFilename={e.seasonString} />
       )}
     </Fragment>
   )
 }
-
-export default App

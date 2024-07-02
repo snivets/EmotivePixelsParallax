@@ -1,6 +1,7 @@
 interface Episode {
   title: string;
   description: string;
+  audioUrl?: string;
   imageUrl?: string | null;
   seasonNumber?: number;
   episodeNumber?: number;

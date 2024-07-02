@@ -9,10 +9,11 @@ function useEpisodes(feedRss: string): Episode[] {
     const title = e.querySelector('title')?.textContent;
     let desc = e.querySelector('description')?.textContent;
     const dateStr = e.querySelector('pubDate')?.textContent;
+    const audioUrl = e.getElementsByTagName('enclosure')[0].getAttribute('url')?.toString();
     let date;
     if (dateStr) {
       date = new Date(dateStr)
-        .toLocaleDateString('en-us', { year:"numeric", month:"long" });
+        .toLocaleDateString('en-us', { year: "numeric", month: "long" });
     }
 
     let imageUrl = null;
@@ -33,7 +34,7 @@ function useEpisodes(feedRss: string): Episode[] {
       episodeNumber = parseInt(episode.textContent);
     }
     let seasonString = isBonus ? null : `s${seasonNumber}e${episodeNumber}`;
-    
+
     if (!title || !desc) return;
 
     if (desc.startsWith('<p>')) {
@@ -43,6 +44,7 @@ function useEpisodes(feedRss: string): Episode[] {
     episodes.push({
       title,
       description: desc,
+      audioUrl,
       imageUrl,
       seasonNumber,
       episodeNumber,

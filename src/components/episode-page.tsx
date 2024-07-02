@@ -21,6 +21,9 @@ export function EpisodePage(props: any) {
       <div className="absolute bottom-2 left-5 opacity-65 uppercase max-w-[80%] truncate">
         {props.title}
       </div>
+      <div className="absolute bottom-2 right-4 max-w-[20%] opacity-20">
+        <audio src={props.audio} controls />
+      </div>
       <div
         className="text-4xl m-[10%] max-h-[90vh] w-full drop-shadow-[0_3px_3px_rgba(0,0,0,0.5)]"
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.text) }} />
