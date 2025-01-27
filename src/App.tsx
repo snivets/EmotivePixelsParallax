@@ -62,16 +62,6 @@ export default function App() {
     return quotes[randomIndex];
   }
 
-  function RandomQuote() {
-    const [quote, setQuote] = useState(getRandomQuote());
-
-    useEffect(() => {
-      setQuote(getRandomQuote());
-    }, []);
-
-    return <div className="text-center text-xl">{quote}</div>;
-  }
-
   return (
     <Router>
       <div onClick={() => setShowMenu(!showMenu)}>
@@ -80,7 +70,7 @@ export default function App() {
         {episodes && <ScrollHinter />}
       </div>
       <Routes>
-        <Route path="/" element={<RandomQuote />} />
+        <Route path="/" element={<div><i>{getRandomQuote()}</i></div>} />
         <Route path="/:podcastString" element={<EpisodeRoute />} />
       </Routes>
       {episodes?.map((e) =>
