@@ -4,6 +4,7 @@ import useImageFilter from './hooks/useImageFilter';
 import useShuffle from './hooks/useShuffle';
 import useOptionsStore from './stores/optionsStore';
 import { TitleCard, EpisodePage, ConfigModal, ScrollHinter } from './components/';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './styles/style-overrides.css';
 
 export default function App() {
@@ -15,6 +16,10 @@ export default function App() {
   const fetchRssFeed = async () => {
     try {
       const response = await fetch('https://anchor.fm/s/4cba81a4/podcast/rss');
+      if (!response.ok) {
+        console.error('Failed to fetch RSS feed:', response.status, response.statusText);
+        return;
+      }
       setFeedRssRaw(await response.text());
     } catch (error) {
       console.error('Podcast fetch failed: ', error);
@@ -33,13 +38,35 @@ export default function App() {
     setEpisodes(useImageFilter(eps));
   }, [feedRss, shuffleEpisodes]);
 
+  const scrollToEpisode = (seasonString: string) => {
+    const element = document.querySelector(`[data-season="${seasonString}"]`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const EpisodeRoute = () => {
+    const { podcastString } = useParams<{ podcastString: string }>();
+    useEffect(() => {
+      if (podcastString) {
+        scrollToEpisode(podcastString);
+      }
+    }, [podcastString]);
+
+    return null;
+  };
+
   return (
-    <>
+    <Router>
       <div onClick={() => setShowMenu(!showMenu)}>
         <TitleCard />
         {showMenu && <ConfigModal />}
         {episodes && <ScrollHinter />}
       </div>
+      <Routes>
+        <Route path="/" element={<div><i>Emotive Pixels podcast is a work in progress</i></div>} />
+        <Route path="/:podcastString" element={<EpisodeRoute />} />
+      </Routes>
       {episodes?.map((e) =>
         <EpisodePage
           key={e.title}
@@ -50,6 +77,6 @@ export default function App() {
           imageFilename={e.seasonString}
           length={e.length} />
       )}
-    </>
+    </Router>
   )
 }

@@ -16,6 +16,7 @@ export function EpisodePage(props: any) {
         backgroundPositionY: 'center',
         backgroundPositionX: 'center',
       }}
+      data-season={props.imageFilename}
     >
       {showDates && <div className="absolute bottom-7 left-5 opacity-40 uppercase max-w-[80%] truncate text-xs drop-shadow-[0_1px_1px_rgba(0,0,0,1.0)]">
         {props.date}

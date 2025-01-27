@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 const useOptionsStore = create(() => ({
   shuffleEpisodes: false,
-  showDates: false,
+  showDates: true,
 }));
 
 export default useOptionsStore;
