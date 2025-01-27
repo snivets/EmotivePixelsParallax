@@ -19,7 +19,18 @@ export function TitleCard() {
           Emotive Pixels is a videogame podcast. We typically discuss (and spoil!) a single game - playing along is optional. Sometimes, we have multi-game episodes we call Pixel Arrays where we talk around the table about things we've been enjoying.
         </p>
         <p className="text-xl leading-none drop-shadow-[0_5px_5px_rgba(0,0,0,1)]">
-          We've been at this for ten years, so there are all kinds of episodes in our backlog, often with new guests.
+          In our tenth year, we are inspecting the current state of AAA gaming, asking what its relevance is in a world of indies of ever-increasing scope.
+        </p>
+        <p className="flex justify-center space-x-4 mt-4">
+          <a href="https://podcasts.apple.com/us/podcast/emotive-pixels-10-years-of-friendship-and-videogames/id888205890" target="_blank" rel="noopener noreferrer">
+            <img src="images/apple-podcasts-icon.svg" alt="Apple Podcasts" className="w-6 h-6" />
+          </a>
+          <a href="https://open.spotify.com/show/0DWpmFcqfxQpxZwXyPF2KO" target="_blank" rel="noopener noreferrer">
+            <img src="images/spotify-icon.svg" alt="Spotify" className="w-6 h-6" />
+          </a>
+          <a href="https://pca.st/gbxx2for" target="_blank" rel="noopener noreferrer">
+            <img src="images/pocket-casts-icon.svg" alt="Pocket Casts" className="w-6 h-6" />
+          </a>
         </p>
       </div>
     </div>

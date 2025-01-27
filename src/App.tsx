@@ -6,6 +6,7 @@ import useOptionsStore from './stores/optionsStore';
 import { TitleCard, EpisodePage, ConfigModal, ScrollHinter } from './components/';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './styles/style-overrides.css';
+import { quotes } from './quotes';
 
 export default function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
@@ -56,6 +57,21 @@ export default function App() {
     return null;
   };
 
+  function getRandomQuote() {
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
+  }
+
+  function RandomQuote() {
+    const [quote, setQuote] = useState(getRandomQuote());
+
+    useEffect(() => {
+      setQuote(getRandomQuote());
+    }, []);
+
+    return <div className="text-center text-xl">{quote}</div>;
+  }
+
   return (
     <Router>
       <div onClick={() => setShowMenu(!showMenu)}>
@@ -64,7 +80,7 @@ export default function App() {
         {episodes && <ScrollHinter />}
       </div>
       <Routes>
-        <Route path="/" element={<div><i>Emotive Pixels podcast is a work in progress</i></div>} />
+        <Route path="/" element={<RandomQuote />} />
         <Route path="/:podcastString" element={<EpisodeRoute />} />
       </Routes>
       {episodes?.map((e) =>
