@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
@@ -10,7 +11,8 @@
   color: rgba(255, 255, 255, 1);
   background-color: #242424;
   scroll-snap-type: y mandatory;
-  scrollbar-width: none;  /* Firefox */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 :-webkit-scrollbar {
@@ -21,7 +23,8 @@ a {
   text-decoration: underline;
 }
 
-p, ul {
+p,
+ul {
   margin-top: 12pt;
 }
 
@@ -31,6 +34,7 @@ ul {
   margin-left: 15%;
   margin-right: 15%;
 }
+
 @media (orientation: portrait) {
   ul {
     margin-left: -5%;

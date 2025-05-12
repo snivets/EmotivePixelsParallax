@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import useEpisodes from './hooks/useEpisodes';
 import useImageFilter from './hooks/useImageFilter';
 import useShuffle from './hooks/useShuffle';
+import useSplitS5Episodes from './hooks/useSplitS5Episodes';
 import useOptionsStore from './stores/optionsStore';
-import { TitleCard, EpisodePage, ConfigModal, ScrollHinter } from './components/';
+import { TitleCard, EpisodePage, S5EpisodePage, ConfigModal, ScrollHinter } from './components/';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './styles/style-overrides.css';
 import { quotes } from './quotes';
@@ -11,6 +12,7 @@ import { quotes } from './quotes';
 export default function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
   const [episodes, setEpisodes] = useState<Episode[]>();
+  const [s5Episodes, setS5Episodes] = useState<Episode[]>();
   const [showMenu, setShowMenu] = useState(false);
   const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
 
@@ -37,6 +39,7 @@ export default function App() {
     if (shuffleEpisodes)
       eps = useShuffle(eps);
     setEpisodes(useImageFilter(eps));
+    setS5Episodes(useSplitS5Episodes(eps));
   }, [feedRss, shuffleEpisodes]);
 
   const scrollToEpisode = (seasonString: string) => {
@@ -73,6 +76,17 @@ export default function App() {
         <Route path="/" element={<div><i>{getRandomQuote()}</i></div>} />
         <Route path="/:podcastString" element={<EpisodeRoute />} />
       </Routes>
+      {s5Episodes?.map((e) =>
+        <S5EpisodePage
+          key={e.title}
+          seasonString={e.seasonString}
+          hasLocalArt={e.hasLocalArt}
+          episodeArtUrl={e.imageUrl}
+          text={e.description}
+          title={e.title}
+          audio={e.audioUrl}
+          length={e.length} />
+      )}
       {episodes?.map((e) =>
         <EpisodePage
           key={e.title}
