@@ -21,7 +21,6 @@ export function S5EpisodePage(props: any) {
       <div>
         <h1 className="text-4xl mb-2 italic">{props.title}</h1>
         <div
-          className="text-3xl"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.text) }} />
       </div>
     </div>
