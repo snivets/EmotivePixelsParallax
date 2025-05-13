@@ -4,7 +4,7 @@ import useImageFilter from './hooks/useImageFilter';
 import useShuffle from './hooks/useShuffle';
 import useSplitS5Episodes from './hooks/useSplitS5Episodes';
 import useOptionsStore from './stores/optionsStore';
-import { TitleCard, EpisodePage, S5EpisodePage, ConfigModal, ScrollHinter } from './components/';
+import { EpisodePage, S5EpisodePage, ConfigModal, ScrollHinter, S5TitleCard } from './components/';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './styles/style-overrides.css';
 import { quotes } from './quotes';
@@ -68,7 +68,7 @@ export default function App() {
   return (
     <Router>
       <div onClick={() => setShowMenu(!showMenu)}>
-        <TitleCard />
+        <S5TitleCard />
         {showMenu && <ConfigModal />}
         {episodes && <ScrollHinter />}
       </div>
