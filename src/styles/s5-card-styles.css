@@ -24,6 +24,20 @@
   line-height: 1.0;
 }
 
+.s5-title-logotype {
+  position: absolute;
+  transform: translateY(350%) rotate(270deg);
+  transform-origin: left top;
+  top: 50%;
+  left: 0px;
+  max-height: 100vh;
+}
+
+.s5-logo {
+  max-width: 100%;
+  height: auto;
+}
+
 @media (min-width: 768px) {
   .s5-episode-card h1 {
     font-size: 42px;
@@ -42,5 +56,21 @@
   .s5-episode-image {
     max-width: 50%;
     margin-bottom: 0;
+  }
+
+  .s5-title-logotype {
+    position: absolute;
+    bottom: 5%;
+    left: 3%;
+    top: auto;
+    max-width: 80%;
+    transform: none;
+  }
+
+  .s5-logo {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

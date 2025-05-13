@@ -4,8 +4,7 @@ export function S5TitleCard() {
       <img
         src="/images/s5-logotype.svg"
         alt="Emotive Pixels"
-        className="max-w-[80%]"
-        style={{ position: 'absolute', bottom: '5%', left: '3%' }}
+        className="s5-title-logotype"
       />
       <div className="w-1/2 flex flex-col justify-center">
         <div>
@@ -53,13 +52,12 @@ export function S5TitleCard() {
         </div>
       </div>
 
-      <div className="w-1/2 flex items-center justify-center">
-        <img
-          loading="lazy"
-          src="/images/s5-logo.svg"
-          alt="Emotive Pixels milkshake, drawn in a line with splotches of color"
-        />
-      </div>
+      <img
+        loading="lazy"
+        src="/images/s5-logo.svg"
+        alt="Emotive Pixels milkshake, drawn in a line with splotches of color"
+        className="s5-logo"
+      />
     </div>
   );
 }
