@@ -17,6 +17,7 @@
   max-width: 90%;
   height: auto;
   margin-bottom: 20px;
+  margin-right: 0px;
 }
 
 .s5-episode-card h1 {
@@ -42,5 +43,13 @@
   .s5-episode-image {
     max-width: 50%;
     margin-bottom: 0;
+    margin-right: 20px;
+  }
+
+  .s5-logo {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
