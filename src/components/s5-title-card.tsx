@@ -6,7 +6,7 @@ export function S5TitleCard() {
 
       <div className="text-container">
         <div>
-          <p className="text-3xl text-black text-right dense-text">
+          <p className="text-2xl text-black text-right dense-text">
             Emotive Pixels is a videogame podcast. We typically discuss (and spoil!) a single game - playing along is optional. Sometimes, we have multi-game episodes we call Pixel Arrays where we each bring interesting small games to the table.
           </p>
           <p className="text-l text-black text-right dense-text">
