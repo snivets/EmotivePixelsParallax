@@ -1,15 +1,23 @@
 import '../styles/s5-title-card.css';
+import { quotes } from '../quotes';
 
 export function S5TitleCard() {
+  // Shuffle quotes using Fisher-Yates algorithm
+  const shuffledQuotes = [...quotes];
+  for (let i = shuffledQuotes.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledQuotes[i], shuffledQuotes[j]] = [shuffledQuotes[j], shuffledQuotes[i]];
+  }
+  const paddedQuotes = shuffledQuotes.join('                                             ');
+
   return (
     <div className="page-container snap-normal snap-start h-screen flex bg-white" style={{ fontFamily: "'Libre Franklin', sans-serif" }}>
-
       <div className="text-container">
         <div>
-          <p className="text-2xl text-black text-right dense-text">
+          <p className="text-2xl md:text-3xl text-black text-right dense-text">
             Emotive Pixels is a videogame podcast. We typically discuss (and spoil!) a single game - playing along is optional. Sometimes, we have multi-game episodes we call Pixel Arrays where we each bring interesting small games to the table.
           </p>
-          <p className="text-l text-black text-right dense-text">
+          <p className="text-l md:text-xl text-black text-right dense-text">
             It's season 5! Nate is trying to catch back up with big AAA games in 2025 to see what they're up to, and what they're able to do (if anything) that indie games can't. What do you get with the planet's biggest entertainment budgets? Let's find out!
           </p>
           <div className="flex justify-end space-x-4 mt-5 mr-5 invert">
@@ -62,6 +70,12 @@ export function S5TitleCard() {
         alt="Emotive Pixels"
         className="s5-title-logotype"
       />
+
+      <div className="ticker-container" >
+        <div className="ticker-text">
+          {paddedQuotes}
+        </div>
+      </div>
     </div>
   );
 }

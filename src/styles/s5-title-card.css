@@ -1,3 +1,34 @@
+.ticker-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  bottom: 0;
+}
+
+.ticker-text {
+  display: inline-block;
+  padding-left: 100%;
+  padding-right: 100%;
+  animation: ticker 120s linear infinite;
+  color: black;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 300;
+  letter-spacing: -0.15rem;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
 .dense-text {
   line-height: 1.0 !important;
 }

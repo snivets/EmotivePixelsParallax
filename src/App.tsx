@@ -7,7 +7,6 @@ import useOptionsStore from './stores/optionsStore';
 import { EpisodePage, S5EpisodePage, ConfigModal, ScrollHinter, S5TitleCard } from './components/';
 import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './styles/style-overrides.css';
-import { quotes } from './quotes';
 
 export default function App() {
   const [feedRss, setFeedRssRaw] = useState<string>('');
@@ -60,11 +59,6 @@ export default function App() {
     return null;
   };
 
-  function getRandomQuote() {
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    return quotes[randomIndex];
-  }
-
   return (
     <Router>
       <div onClick={() => setShowMenu(!showMenu)}>
@@ -73,7 +67,7 @@ export default function App() {
         {episodes && <ScrollHinter />}
       </div>
       <Routes>
-        <Route path="/" element={<div><i>{getRandomQuote()}</i></div>} />
+        <Route path="/" />
         <Route path="/:podcastString" element={<EpisodeRoute />} />
       </Routes>
       {s5Episodes?.map((e) =>
