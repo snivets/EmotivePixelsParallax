@@ -4,6 +4,17 @@ function useEpisodes(feedRss: string): Episode[] {
     .parseFromString(feedRss, 'text/xml')
     .querySelectorAll("item");
 
+  // First pass: count total bonus episodes per season
+  const bonusTotalBySeason: Record<number, number> = {};
+  episodesXml.forEach(e => {
+    const season = e.getElementsByTagName('itunes:season')[0];
+    const isBonus = e.getElementsByTagName('itunes:episodeType')[0]?.textContent == 'bonus';
+    if (season && season.textContent && isBonus) {
+      const seasonNumber = parseInt(season.textContent);
+      bonusTotalBySeason[seasonNumber] = (bonusTotalBySeason[seasonNumber] || 0) + 1;
+    }
+  });
+
   var episodes: Episode[] = [];
   const bonusCountBySeason: Record<number, number> = {};
   episodesXml.forEach(e => {
@@ -39,7 +50,9 @@ function useEpisodes(feedRss: string): Episode[] {
     if (seasonNumber) {
       if (isBonus) {
         bonusCountBySeason[seasonNumber] = (bonusCountBySeason[seasonNumber] || 0) + 1;
-        seasonString = `s${seasonNumber}b${bonusCountBySeason[seasonNumber]}`;
+        const bonusNumber = bonusTotalBySeason[seasonNumber] - bonusCountBySeason[seasonNumber] + 1;
+        seasonString = `s${seasonNumber}b${bonusNumber}`;
+        console.log(seasonString + ' for ' + title);
       } else {
         seasonString = `s${seasonNumber}e${episodeNumber}`;
       }
