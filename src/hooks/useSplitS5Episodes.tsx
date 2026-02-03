@@ -10,7 +10,7 @@ function useSplitS5Episodes(allEpisodes: Episode[]): Episode[] {
   let filteredEpisodes: Episode[] = [];
   const svgImages = getSvgImages();
   allEpisodes.forEach(e => {
-    if (e.seasonNumber === 5) {
+    if (e.seasonNumber === 5 && e.seasonString !== 's5b1') {
       e.hasLocalArt = e.seasonString !== null && svgImages.includes(e.seasonString);
       filteredEpisodes.push(e);
     }
