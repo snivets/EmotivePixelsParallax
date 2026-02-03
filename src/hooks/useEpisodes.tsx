@@ -5,6 +5,7 @@ function useEpisodes(feedRss: string): Episode[] {
     .querySelectorAll("item");
 
   var episodes: Episode[] = [];
+  const bonusCountBySeason: Record<number, number> = {};
   episodesXml.forEach(e => {
     const title = e.querySelector('title')?.textContent;
     let desc = e.querySelector('description')?.textContent;
@@ -34,7 +35,15 @@ function useEpisodes(feedRss: string): Episode[] {
     if (episode && episode.textContent) {
       episodeNumber = parseInt(episode.textContent);
     }
-    let seasonString = isBonus ? null : `s${seasonNumber}e${episodeNumber}`;
+    let seasonString: string | null = null;
+    if (seasonNumber) {
+      if (isBonus) {
+        bonusCountBySeason[seasonNumber] = (bonusCountBySeason[seasonNumber] || 0) + 1;
+        seasonString = `s${seasonNumber}b${bonusCountBySeason[seasonNumber]}`;
+      } else {
+        seasonString = `s${seasonNumber}e${episodeNumber}`;
+      }
+    }
 
     if (!title || !desc) return;
 
