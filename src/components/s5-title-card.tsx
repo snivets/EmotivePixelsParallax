@@ -1,22 +1,28 @@
-import { useMemo } from 'react';
 import '../styles/s5-title-card.css';
 import { quotes } from '../quotes';
 
-export function S5TitleCard() {
-  const paddedQuotes = useMemo(() => {
-    const shuffledQuotes = [...quotes];
-    for (let index = shuffledQuotes.length - 1; index > 0; index -= 1) {
-      const randomIndex = Math.floor(Math.random() * (index + 1));
-      [shuffledQuotes[index], shuffledQuotes[randomIndex]] = [
-        shuffledQuotes[randomIndex],
-        shuffledQuotes[index],
-      ];
-    }
-    return shuffledQuotes.join(' '.repeat(24));
-  }, []);
+const shuffledQuotes = [...quotes];
+for (let index = shuffledQuotes.length - 1; index > 0; index -= 1) {
+  const randomIndex = Math.floor(Math.random() * (index + 1));
+  [shuffledQuotes[index], shuffledQuotes[randomIndex]] = [
+    shuffledQuotes[randomIndex],
+    shuffledQuotes[index],
+  ];
+}
 
+const paddedQuotes = shuffledQuotes.join(' '.repeat(24));
+
+interface S5TitleCardProps {
+  onClick: () => void;
+}
+
+export function S5TitleCard({ onClick }: S5TitleCardProps) {
   return (
-    <div className="s5-title-card page-container snap-normal snap-start h-screen flex bg-white" style={{ fontFamily: "'Libre Franklin', sans-serif" }}>
+    <div
+      className="s5-title-card page-container snap-normal snap-start h-screen flex bg-white"
+      style={{ fontFamily: "'Libre Franklin', sans-serif" }}
+      onClick={onClick}
+    >
       <div className="text-container">
         <div>
           <p className="text-2xl md:text-3xl text-black text-right dense-text">

@@ -1,8 +1,11 @@
-import { useState } from 'react';
 import useOptionsStore from '../stores/optionsStore';
 
-export function ConfigModal() {
-  const [isOpen, setIsOpen] = useState(false);
+interface ConfigModalProps {
+  isOpen: boolean;
+  onToggle: () => void;
+}
+
+export function ConfigModal({ isOpen, onToggle }: ConfigModalProps) {
   const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
   const showDates = useOptionsStore((state) => state.showDates);
 
@@ -33,10 +36,10 @@ export function ConfigModal() {
       </fieldset>
       <button
         type="button"
-        className="rounded-full bg-white px-4 py-2 text-black shadow-lg focus-visible:outline focus-visible:outline-2"
+        className="sr-only focus:not-sr-only focus:fixed focus:bottom-5 focus:right-5 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-black focus:shadow-lg focus-visible:outline focus-visible:outline-2"
         aria-expanded={isOpen}
         aria-controls="episode-settings"
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={onToggle}
       >
         Settings
       </button>

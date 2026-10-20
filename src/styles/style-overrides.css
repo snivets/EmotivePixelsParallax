@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Madimi+One&display=swap');
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
 
 :root {
   font-family: 'Madimi One', Helvetica, sans-serif;

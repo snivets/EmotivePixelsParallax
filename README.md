@@ -2,6 +2,8 @@
 
 A React and Vite site that presents Emotive Pixels podcast episodes as full-screen, scroll-snapping cards. Episode details are loaded from the podcast RSS feed; season artwork is maintained in `public/images`.
 
+Use Node.js 24.15.0 or newer.
+
 ## Development
 
 ```sh

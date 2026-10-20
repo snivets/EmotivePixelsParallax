@@ -15,6 +15,7 @@ const RSS_FEED_URL = 'https://anchor.fm/s/4cba81a4/podcast/rss';
 function AppContent() {
   const [episodes, setEpisodes] = useState<Episode[] | null>(null);
   const [feedError, setFeedError] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
   const shuffle = useOptionsStore((state) => state.shuffleEpisodes);
   const { pathname } = useLocation();
 
@@ -62,8 +63,11 @@ function AppContent() {
 
   return (
     <>
-      <S5TitleCard />
-      <ConfigModal />
+      <S5TitleCard onClick={() => setShowSettings((open) => !open)} />
+      <ConfigModal
+        isOpen={showSettings}
+        onToggle={() => setShowSettings((open) => !open)}
+      />
       {episodes && episodes.length > 0 && <ScrollHinter />}
       {feedError && (
         <p role="alert" className="fixed inset-x-4 top-4 z-50 rounded bg-red-100 p-4 text-left text-red-900">
