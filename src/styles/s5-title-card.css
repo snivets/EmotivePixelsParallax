@@ -29,11 +29,11 @@
   }
 }
 
-ul {
+.s5-title-card ul {
   display: none;
 }
 
-.dense-text {
+.s5-title-card .dense-text {
   line-height: 1.0 !important;
 }
 
@@ -87,10 +87,6 @@ ul {
     width: 50%;
     height: 100%;
     position: relative;
-  }
-
-  .image-shrink-prevention {
-    overflow: auto;
   }
 
   .s5-title-logotype {

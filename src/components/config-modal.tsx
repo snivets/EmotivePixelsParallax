@@ -1,40 +1,45 @@
-import useOptionsStore from "../stores/optionsStore";
+import { useState } from 'react';
+import useOptionsStore from '../stores/optionsStore';
 
 export function ConfigModal() {
+  const [isOpen, setIsOpen] = useState(false);
   const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
   const showDates = useOptionsStore((state) => state.showDates);
 
-  const toggleShuffleEpisodes = (checked: boolean) => {
-    useOptionsStore.setState({ shuffleEpisodes: checked });
-  }
-  const toggleShowDates = (checked: boolean) => {
-    useOptionsStore.setState({ showDates: checked });
-  }
-
   return (
-    <div className="fixed bottom-20 right-20 bg-opacity-75 transform bg-white border-opacity-100 rounded-2xl p-5 text-left text-xs font-sans italic drop-shadow"
-      onClick={(e) => e.stopPropagation()} >
-      <label className='flex items-top'>
-        <input
-          type="checkbox"
-          onChange={(e) => toggleShuffleEpisodes(e.target.checked)}
-          checked={shuffleEpisodes} />
-        <span className='px-1'>Shuffle episodes</span>
-      </label>
-      <label className='flex items-top'>
-        <input
-          type="checkbox"
-          onChange={(e) => toggleShowDates(e.target.checked)}
-          checked={showDates} />
-        <span className="px-1">Show dates</span>
-      </label>
-      <label className='flex items-top'>
-        <input
-          type="checkbox"
-          disabled={true}
-          checked={false} />
-        <span className="px-1">Behind the scenes</span>
-      </label>
+    <div className="fixed bottom-5 right-5 z-40 font-sans text-sm">
+      <fieldset
+        id="episode-settings"
+        hidden={!isOpen}
+        className="mb-3 rounded-2xl border-0 bg-white p-5 text-left text-black shadow-lg"
+      >
+        <legend className="sr-only">Episode settings</legend>
+        <label className="flex items-center gap-2 whitespace-nowrap">
+          <input
+            type="checkbox"
+            onChange={(event) => useOptionsStore.setState({ shuffleEpisodes: event.target.checked })}
+            checked={shuffleEpisodes}
+          />
+          Shuffle episodes
+        </label>
+        <label className="mt-3 flex items-center gap-2 whitespace-nowrap">
+          <input
+            type="checkbox"
+            onChange={(event) => useOptionsStore.setState({ showDates: event.target.checked })}
+            checked={showDates}
+          />
+          Show dates
+        </label>
+      </fieldset>
+      <button
+        type="button"
+        className="rounded-full bg-white px-4 py-2 text-black shadow-lg focus-visible:outline focus-visible:outline-2"
+        aria-expanded={isOpen}
+        aria-controls="episode-settings"
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        Settings
+      </button>
     </div>
-  )
+  );
 }

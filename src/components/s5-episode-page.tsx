@@ -1,27 +1,30 @@
 import DOMPurify from 'dompurify';
 import '../styles/s5-card-styles.css';
+import type { Episode } from '../types/Episode';
 
-export function S5EpisodePage(props: any) {
+export function S5EpisodePage({ episode }: { episode: Episode }) {
   // Extract "Book Club: " tag from title if present
-  const bookClubMatch = props.title?.match(/^Book Club: (.+)$/);
+  const bookClubMatch = episode.title.match(/^Book Club: (.+)$/);
   const hasBookClubTag = !!bookClubMatch;
-  const displayTitle = bookClubMatch ? bookClubMatch[1] : props.title;
+  const displayTitle = bookClubMatch ? bookClubMatch[1] : episode.title;
 
   return (
-    <div className="s5-episode-card snap-normal snap-start" data-season={props.seasonString}>
-      {props.hasLocalArt && (
+    <div className="s5-episode-card snap-normal snap-start" data-season={episode.seasonString ?? undefined}>
+      {episode.hasLocalArt && episode.seasonString && (
         <img
-          src={`images/svgs/${props.seasonString}.svg`}
-          alt="Single line art by Vicki Jee"
+          src={`/images/svgs/${episode.seasonString}.svg`}
+          alt={`Single-line artwork for ${episode.title} by Vicki Jee`}
           loading="lazy"
           className="s5-episode-image"
         />
       )}
-      {!props.hasLocalArt && (
+      {!episode.hasLocalArt && episode.imageUrl && (
         <img
-          src={props.episodeArtUrl}
+          src={episode.imageUrl}
+          alt={`Artwork for ${episode.title}`}
           loading="lazy"
-          className="s5-episode-image" />
+          className="s5-episode-image"
+        />
       )}
       <div>
         <h1 className="text-4xl mb-2 italic">
@@ -31,7 +34,9 @@ export function S5EpisodePage(props: any) {
           {displayTitle}
         </h1>
         <div
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.text) }} />
+          className="episode-description"
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(episode.description) }}
+        />
       </div>
     </div>
   );

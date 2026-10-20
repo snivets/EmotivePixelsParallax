@@ -1,96 +1,93 @@
-import { useEffect, useState } from 'react';
-import useEpisodes from './hooks/useEpisodes';
-import useImageFilter from './hooks/useImageFilter';
-import useShuffle from './hooks/useShuffle';
-import useSplitS5Episodes from './hooks/useSplitS5Episodes';
+import { useEffect, useMemo, useState } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { ConfigModal } from './components/config-modal';
+import { EpisodePage } from './components/episode-page';
+import { S5EpisodePage } from './components/s5-episode-page';
+import { S5TitleCard } from './components/s5-title-card';
+import { ScrollHinter } from './components/scroll-hinter';
+import { createEpisodeCollections, parseEpisodes, shuffleEpisodes } from './data/episodes';
+import type { Episode } from './types/Episode';
 import useOptionsStore from './stores/optionsStore';
-import { EpisodePage, S5EpisodePage, ConfigModal, ScrollHinter, S5TitleCard } from './components/';
-import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
 import './styles/style-overrides.css';
 
-export default function App() {
-  const [feedRss, setFeedRssRaw] = useState<string>('');
-  const [episodes, setEpisodes] = useState<Episode[]>();
-  const [s5Episodes, setS5Episodes] = useState<Episode[]>();
-  const [showMenu, setShowMenu] = useState(false);
-  const shuffleEpisodes = useOptionsStore((state) => state.shuffleEpisodes);
+const RSS_FEED_URL = 'https://anchor.fm/s/4cba81a4/podcast/rss';
 
-  const fetchRssFeed = async () => {
-    try {
-      const response = await fetch('https://anchor.fm/s/4cba81a4/podcast/rss');
-      if (!response.ok) {
-        console.error('Failed to fetch RSS feed:', response.status, response.statusText);
-        return;
-      }
-      setFeedRssRaw(await response.text());
-    } catch (error) {
-      console.error('Podcast fetch failed: ', error);
-    }
-  };
+function AppContent() {
+  const [episodes, setEpisodes] = useState<Episode[] | null>(null);
+  const [feedError, setFeedError] = useState<string | null>(null);
+  const shuffle = useOptionsStore((state) => state.shuffleEpisodes);
+  const { pathname } = useLocation();
 
-  // Get podcast XML data on page load
   useEffect(() => {
-    fetchRssFeed();
+    const controller = new AbortController();
+
+    async function loadFeed() {
+      try {
+        const response = await fetch(RSS_FEED_URL, { signal: controller.signal });
+        if (!response.ok) {
+          throw new Error(`Podcast feed request failed (${response.status} ${response.statusText}).`);
+        }
+        setEpisodes(parseEpisodes(await response.text()));
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        const message = error instanceof Error ? error.message : 'Unknown error.';
+        console.error('Podcast feed could not be loaded:', error);
+        setFeedError(`Unable to load podcast episodes. ${message}`);
+      }
+    }
+
+    void loadFeed();
+    return () => controller.abort();
   }, []);
 
+  const collections = useMemo(() => {
+    const orderedEpisodes = episodes ?? [];
+    return createEpisodeCollections(shuffle ? shuffleEpisodes(orderedEpisodes) : orderedEpisodes);
+  }, [episodes, shuffle]);
+  const seasonStrings = useMemo(
+    () => [
+      ...collections.seasonFiveEpisodes,
+      ...collections.classicEpisodes,
+    ].flatMap((episode) => episode.seasonString ? [episode.seasonString] : []),
+    [collections],
+  );
+
   useEffect(() => {
-    let eps = useEpisodes(feedRss);
-    if (shuffleEpisodes)
-      eps = useShuffle(eps);
-    setEpisodes(useImageFilter(eps));
-    setS5Episodes(useSplitS5Episodes(eps));
-  }, [feedRss, shuffleEpisodes]);
-
-  const scrollToEpisode = (seasonString: string) => {
-    const element = document.querySelector(`[data-season="${seasonString}"]`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const EpisodeRoute = () => {
-    const { podcastString } = useParams<{ podcastString: string }>();
-    useEffect(() => {
-      if (podcastString) {
-        scrollToEpisode(podcastString);
-      }
-    }, [podcastString]);
-
-    return null;
-  };
+    const seasonString = pathname.split('/').filter(Boolean)[0];
+    if (!seasonString || !seasonStrings.includes(seasonString)) return;
+    const element = Array.from(document.querySelectorAll<HTMLElement>('[data-season]'))
+      .find((candidate) => candidate.dataset.season === seasonString);
+    element?.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }, [pathname, seasonStrings]);
 
   return (
-    <Router>
-      <div onClick={() => setShowMenu(!showMenu)}>
-        <S5TitleCard />
-        {showMenu && <ConfigModal />}
-        {episodes && <ScrollHinter />}
-      </div>
+    <>
+      <S5TitleCard />
+      <ConfigModal />
+      {episodes && episodes.length > 0 && <ScrollHinter />}
+      {feedError && (
+        <p role="alert" className="fixed inset-x-4 top-4 z-50 rounded bg-red-100 p-4 text-left text-red-900">
+          {feedError}
+        </p>
+      )}
       <Routes>
-        <Route path="/" />
-        <Route path="/:podcastString" element={<EpisodeRoute />} />
+        <Route index element={null} />
+        <Route path=":podcastString" element={null} />
       </Routes>
-      {s5Episodes?.map((e) =>
-        <S5EpisodePage
-          key={e.title}
-          seasonString={e.seasonString}
-          hasLocalArt={e.hasLocalArt}
-          episodeArtUrl={e.imageUrl}
-          text={e.description}
-          title={e.title}
-          audio={e.audioUrl}
-          length={e.length} />
-      )}
-      {episodes?.map((e) =>
-        <EpisodePage
-          key={e.title}
-          text={e.description}
-          title={e.title}
-          date={e.seasonString + ' ⋅ ' + e.episodeDate}
-          audio={e.audioUrl}
-          imageFilename={e.seasonString}
-          length={e.length} />
-      )}
-    </Router>
-  )
+      {collections.seasonFiveEpisodes.map((episode) => (
+        <S5EpisodePage key={episode.seasonString ?? episode.title} episode={episode} />
+      ))}
+      {collections.classicEpisodes.map((episode) => (
+        <EpisodePage key={episode.seasonString ?? episode.title} episode={episode} />
+      ))}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
+  );
 }

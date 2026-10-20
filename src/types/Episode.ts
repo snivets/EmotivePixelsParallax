@@ -1,4 +1,4 @@
-interface Episode {
+export interface Episode {
   title: string;
   description: string;
   audioUrl?: string;
@@ -9,5 +9,5 @@ interface Episode {
   episodeDate?: string;
   isBonus: boolean;
   length: string | null;
-  hasLocalArt?: boolean; //Only really used for S5
+  hasLocalArt: boolean;
 }
